@@ -13,7 +13,8 @@ void gen_permutation(int* n, int* max, int* vector) {
 	while (count != *max) {
 		reset(vector, &count, n);
 
-		moving = count;
+		while(vector[moving + 1] != 0)				// define the moving one
+			moving++;
 		
 		fixed = moving - 1;							// define fixed (in relation to moving one)
 		vector[moving] = 1;							// assert dominance (1)
