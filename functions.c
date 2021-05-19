@@ -1,53 +1,37 @@
 
 #include "Lab09.h"
+#include <stdio.h>
+#include <math.h>
 
-//[0][0][0][0][0]
-//[1][0][0][0][0]
+// по дереву надо двигаться как - вот в чём вопрос
+// смотрми
 
-void gen_permutation(int* n, int* max, int* vector) {
-	print_vector(vector, n);
-
-	int fixed = -1, moving = 0;
-	int count = 0;
-
-	while (count != *max) {
-		reset(vector, &count, n);
-
-		moving = count;
-		
-		fixed = moving - 1;							// define fixed (in relation to moving one)
-		vector[moving] = 1;							// assert dominance (1)
-
-		for (int i = 0; i < *n - count; i++)
+// 0 0 0 0
+void gen_Binary32(int* vector, int level)
+{
+	if (level != 3)								// условия конца рекурсии - мы принтим вектора
+	{
+		int frozen = 4;							// вот тут мы определяем красные позиции фиксированные
+		if (level != 1)
 		{
-			while (moving < *n)						// moving permutations
-			{
-				print_vector(vector, n);
-				vector[moving] = 0;
-				vector[++moving] = 1;
-			}
-			vector[fixed] = 0;
-			vector[++fixed] = 1;
+			while (vector[frozen - 1] != 1)
+				frozen--;
 		}
-		count++;
+		else
+			frozen = 0;
+
+		for (; frozen < 4; frozen++) {
+			vector[frozen] = 1;
+			gen_Binary32(vector, ++level);
+		}
+		gen_Binary32(vector, ++level);
 	}
-	return;
+	else
+		print(vector);
 }
 
-void reset(int* vector, int* count, int* n) {
-	for (int i = *n-1; vector[i] != 0; i--)			// zero-vector
-		vector[i] = 0;
-	
-	for (int i = 0; i < *count; i++)				// assign 1 where needed
-		vector[i] = 1;
-
-	return;
-}
-
-void print_vector(int* vector, int *n) {
-	static int count = 0;
-	count++;
-	printf("\n    %d.   ", count);
-	for (int i = 0; i < *n; i++)
-		printf("[%d]", vector[i]);
+void print(int* vector) {
+	printf("\n");
+	for (int i = 0; i < 4; i++)
+		printf(" %d ", vector[i]);
 }
