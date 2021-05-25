@@ -4,7 +4,7 @@
 
 int main()
 {
-    int* vector = calloc(4, sizeof(int) * 4);
+    int* vector = calloc(SIZE, sizeof(int) * SIZE);
     gen_Binary32(vector, 1);
     return 0;
 }
