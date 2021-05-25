@@ -5,6 +5,6 @@
 int main()
 {
     int* vector = calloc(SIZE, sizeof(int) * SIZE);
-    gen_Binary32(vector, 1);
+    gen_Binary32(vector, 1, 0);
     return 0;
 }
